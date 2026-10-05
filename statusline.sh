@@ -173,10 +173,12 @@ PHRASES=(
 INDEX=$(( $(date +%s) / 6 % ${#PHRASES[@]} ))
 PHRASE="${PHRASES[$INDEX]}"
 
-# Check if phrase should be red (blood/Jesus-centered lines)
+# Blood/Jesus-centered lines stay red; every other phrase cycles through the palette
+PALETTE=('\033[0;36m' '\033[0;33m' '\033[0;32m' '\033[0;35m' '\033[0;34m')
 if [[ "$PHRASE" == RED\|* ]]; then
   PHRASE="${PHRASE#RED|}"
-  echo -e "${RED}✝ $PHRASE${RESET} | $MODEL | ${PCT}% context | \$$COST"
+  COLOR="$RED"
 else
-  echo -e "✝ $PHRASE | $MODEL | ${PCT}% context | \$$COST"
+  COLOR="${PALETTE[$(( INDEX % ${#PALETTE[@]} ))]}"
 fi
+echo -e "${COLOR}✝ $PHRASE${RESET} | $MODEL | ${PCT}% context | \$$COST"

@@ -49,7 +49,7 @@ Change the rotation interval. Edit the line `INDEX=$(( $(date +%s) / 6 % ${#PHRA
 Find and remove duplicate phrases in the array (case-insensitive, ignoring the `RED|` prefix). Report what was removed. Apply to both copies.
 
 ### `color <on|off>`
-`off`: make every phrase print without red (strip the RED branch so all lines use the plain `echo`). `on`: restore the red branch for `RED|`-prefixed lines. Prefer toggling behavior over deleting the RED prefixes so it's reversible.
+`RED|`-prefixed lines print red; every other phrase cycles through the `PALETTE` array (cyan, yellow, green, magenta, blue) by phrase index. `off`: make every phrase print uncolored (set `COLOR=""` for both branches). `on`: restore red for `RED|` lines and the palette for the rest. Prefer toggling behavior over deleting the RED prefixes so it's reversible.
 
 ## Notes
 - The script reads Claude Code's status JSON on stdin and pulls `.model.display_name`, `.context_window.used_percentage`, and `.cost.total_cost_usd` via `jq`. `jq` must be installed (`brew install jq`).
